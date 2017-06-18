@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<title>GitHub Flavored Markdown 2 Backlog Flavored Markdown Converter</title>
+	<style>
+		#before, #after {
+			height: 400px;
+			width: 400px;
+		}
+		.row {
+			display: flex;
+			align-items: center;
+		}
+		.column {
+			padding: 20px;
+		}
+	</style>
+</head>
+<body>
+<h1>GitHub 2 Backlog Converter</h1>
+<div class="row">
+<div class="column"><textarea id="before" cols="30" rows="10"></textarea></div>
+<div class="column"><button id="btn-convert">Convert it!</button></div>
+<div class="column"><textarea id="after" cols="30" rows="10" readonly></textarea></div>
+</div>
+<script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script>
+$(function() {
+	$('#btn-convert').on('click', function() {
+		let str = $('#before').val();
+		str = str
+			.replace(/\[(.*)\]\((.*)\)/g, "[[$1:$2]]")
+			.replace(/\`\`\`([\s\S]*?)\`\`\`\n/g, "{code}$1{/code}")
+			.replace(/^###/gmi, '***')
+			.replace(/^##/gmi, '**');
+		$('#after').html(str);
+	})
+});
+</script>
+</body>
+</html>
